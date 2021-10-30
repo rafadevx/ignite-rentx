@@ -21,7 +21,7 @@
 
 
 <p align="center">
-  <img alt="App demo" src="./src/assets/demo_large.gif">
+  <img alt="App demo" src="./src/assets/demo.gif">
 </p>
 
 ## :rocket: Technologies
