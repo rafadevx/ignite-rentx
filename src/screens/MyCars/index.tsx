@@ -1,9 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
+import { FlatList } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 
+import { CarCard } from '../../components/CarCard';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 import { BackButton } from '../../components/BackButton';
 import { CarDTO } from '../../dtos/CarDTO';
@@ -24,8 +27,6 @@ import {
   CarFooterPeriod,
   CarFooterDate,
 } from './styles';
-import { ActivityIndicator, FlatList } from 'react-native';
-import { CarCard } from '../../components/CarCard';
 
 interface CarProps {
   id: string;
@@ -77,7 +78,7 @@ export function MyCars() {
 
       </Header>
 
-      { loading ? <ActivityIndicator size="large" color={theme.colors.main} style={{ flex: 1 }} /> :
+      { loading ? <LoadAnimation /> :
         <Content>
           <Appointments>
             <AppointmentsTitle>Agendamentos feitos</AppointmentsTitle>
