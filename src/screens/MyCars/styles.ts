@@ -70,7 +70,7 @@ export const CarFooter = styled.View`
 `;
 
 export const CarFooterTitle = styled.Text`
-color: ${({ theme }) => theme.colors.text_datail};
+color: ${({ theme }) => theme.colors.text_detail};
   font-family: ${({ theme }) => theme.fonts.secondary_500};
   font-size: ${RFValue(10)}px;
   text-transform: uppercase;

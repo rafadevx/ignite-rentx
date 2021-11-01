@@ -12,9 +12,17 @@ interface Props {
   onPress: () => void;
   enabled?: boolean;
   loading?: boolean;
+  light?: boolean;
 }
 
-export function Button({ title, color, enabled = true, loading = false, ...rest }: Props) {
+export function Button({ 
+  title,
+  color,
+  enabled = true,
+  loading = false,
+  light = false,
+  ...rest
+}: Props) {
   return (
     <Container 
       {...rest} 
@@ -24,7 +32,7 @@ export function Button({ title, color, enabled = true, loading = false, ...rest 
     >
       { loading
         ? <ActivityIndicator />
-        : <Title>{title}</Title>
+        : <Title light={light}>{title}</Title>
       }
     </Container>
   );

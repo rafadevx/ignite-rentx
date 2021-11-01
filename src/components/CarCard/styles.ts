@@ -18,7 +18,7 @@ export const Details = styled.View``;
 export const Brand = styled.Text`
   font-family: ${({ theme }) => theme.fonts.secondary_500};
   font-size: ${RFValue(10)}px;
-  color: ${({ theme }) => theme.colors.text_datail};
+  color: ${({ theme }) => theme.colors.text_detail};
   text-transform: uppercase;
   margin-bottom: 5px;
 `;
@@ -42,7 +42,7 @@ export const Rent = styled.View`
 export const Period = styled.Text`
   font-family: ${({ theme }) => theme.fonts.secondary_500};
   font-size: ${RFValue(10)}px;
-  color: ${({ theme }) => theme.colors.text_datail};
+  color: ${({ theme }) => theme.colors.text_detail};
   text-transform: uppercase;
   margin-bottom: 5px;
 `;
