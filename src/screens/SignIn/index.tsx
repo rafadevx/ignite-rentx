@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import { 
   KeyboardAvoidingView, 
   TouchableWithoutFeedback, 
-  Keyboard 
+  Keyboard, 
+  Alert
 } from 'react-native';
 import { useTheme } from 'styled-components';
+import * as Yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../routes/stack.routes';
 
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
@@ -19,10 +24,39 @@ import {
   ButtonArea
 } from './styles';
 
+type signInScreenProp = StackNavigationProp<RootStackParamList, 'SignIn'>;
+
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const theme = useTheme();
+  const navigation = useNavigation<signInScreenProp>();
+
+  async function handleSignIn() {
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string().required('E-mail obrigatório')
+          .email('Digite um e-mail válido'),
+        password: Yup.string().required('Senha é obrigatória')
+      });
+
+      await schema.validate({ email, password });
+    } catch(error) {
+      if (error instanceof Yup.ValidationError) {
+        Alert.alert('Opa!', error.message);
+      } else {
+        Alert.alert(
+          'Erro na autenticação',
+          'Ocorreu erro ao fazer login, verifique as credenciais.'
+        );
+      }
+    }
+  }
+
+  function handleNewAccount() {
+    navigation.navigate('FirstStep');
+  }
+
   return (
     <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -61,14 +95,14 @@ export function SignIn() {
           <ButtonArea>
             <Button
               title="Login"
-              onPress={() => {}}
+              onPress={handleSignIn}
               enabled={true}
               loading={false}
             />
             <Button
               title="Criar conta gratuita"
               color={theme.colors.background_secondary}
-              onPress={() => {}}
+              onPress={handleNewAccount}
               enabled={true}
               loading={false}
               light

@@ -9,6 +9,7 @@ import { SchedulingComplete } from '../screens/SchedulingComplete';
 import { MyCars } from '../screens/MyCars';
 import { Splash } from '../screens/Splash';
 import { SignIn } from '../screens/SignIn';
+import { FirstStep } from '../screens/SignUp/FirstStep';
 import { CarDTO } from '../dtos/CarDTO';
 
 
@@ -23,6 +24,7 @@ export type RootStackParamList = {
   SchedulingDetails: {car: CarDTO, dates: RentalPeriod};
   SchedulingComplete: undefined;
   MyCars: undefined;
+  FirstStep: undefined;
 };
 
 export function StackRoutes() {
@@ -36,6 +38,7 @@ export function StackRoutes() {
       initialRouteName="SignIn" 
     >
       <Screen name="SignIn" component={SignIn} />
+      <Screen name="FirstStep" component={FirstStep} />
       <Screen name="Home" component={Home} options={{ gestureEnabled: false }}/>
       <Screen name="CarDetails" component={CarDetails} />
       <Screen name="Scheduling" component={Scheduling} />
