@@ -92,7 +92,12 @@ export function SchedulingDetails() {
     })
     .then(() => {
       setLoading(false);
-      navigation.navigate('SchedulingComplete');
+      navigation.navigate('Confirmation',
+      { 
+        title: 'Carro Alugado!',
+        message: `Agora você só precisa ir\naté a concessionária da RENTX\nbuscar seu automóvel`,
+        nextScreen: 'Home'
+      });
     })
     .catch(() => {
       setLoading(false);

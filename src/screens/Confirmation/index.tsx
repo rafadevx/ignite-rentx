@@ -1,6 +1,6 @@
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/stack.routes';
 
@@ -16,15 +16,23 @@ import {
   Footer,
 } from './styles';
 
-type schedulingCompleteScreenProp = StackNavigationProp<RootStackParamList, 'SchedulingComplete'>;
+interface Params {
+  title: string;
+  message: string;
+  nextScreen: 'Home' | 'SignIn';
+}
 
-export function SchedulingComplete() {
+type confirmationScreenProp = StackNavigationProp<RootStackParamList, 'Confirmation'>;
+
+export function Confirmation() {
   const { width } = useWindowDimensions();
 
-  const navigation = useNavigation<schedulingCompleteScreenProp>();
+  const navigation = useNavigation<confirmationScreenProp>();
+  const route = useRoute();
+  const { title, message, nextScreen } = route.params as Params;
 
   function handleOk() {
-    navigation.navigate('Home');
+    navigation.navigate(nextScreen);
   }
   return (
     <Container>
@@ -32,11 +40,9 @@ export function SchedulingComplete() {
       <Content>
         <DoneSvg width={80} height={80} />
 
-        <Title>Carro Alugado!</Title>
+        <Title>{title}</Title>
         <Message>
-          Agora você só precisa ir {'\n'}
-          até a concessionária da RENTX {'\n'}
-          buscar seu automóvel
+          {message}
         </Message>  
       </Content>
 
