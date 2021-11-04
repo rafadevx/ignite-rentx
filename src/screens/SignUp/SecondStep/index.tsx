@@ -23,6 +23,7 @@ import {
   FormTitle,
 } from './styles';
 import { PasswordInput } from '../../../components/PasswordInput';
+import api from '../../../service/api';
 
 interface Params {
   user: {
@@ -43,18 +44,32 @@ export function SecondStep() {
 
   const theme = useTheme();
 
-  function handleRegister() {
+  async function handleRegister() {
     if (!password || !confirmPassword) {
       return Alert.alert('Informe a senha.');
     }
     if (password !== confirmPassword) {
       return Alert.alert('Senhas não conferem.');
     }
-    navigation.navigate('Confirmation', {
-      title: 'Conta Criada',
-      message: '',
-      nextScreen: 'SignIn'
-    });
+
+    try {
+      await api.post('/users', {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password
+      });
+  
+      navigation.navigate('Confirmation', {
+        title: 'Conta Criada',
+        message: '',
+        nextScreen: 'SignIn'
+      });  
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Opa!', 'Não foi possível cadastrar.')
+    }
+    
   }
 
   return (

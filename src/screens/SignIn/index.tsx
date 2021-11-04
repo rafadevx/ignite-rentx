@@ -23,12 +23,14 @@ import {
   Form,
   ButtonArea
 } from './styles';
+import { useAuth } from '../../hooks/auth';
 
 type signInScreenProp = StackNavigationProp<RootStackParamList, 'SignIn'>;
 
 export function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { signIn } = useAuth();
   const theme = useTheme();
   const navigation = useNavigation<signInScreenProp>();
 
@@ -41,6 +43,7 @@ export function SignIn() {
       });
 
       await schema.validate({ email, password });
+      signIn({ email, password });
     } catch(error) {
       if (error instanceof Yup.ValidationError) {
         Alert.alert('Opa!', error.message);
