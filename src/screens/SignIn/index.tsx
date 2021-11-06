@@ -9,7 +9,7 @@ import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../routes/stack.routes';
+import { RootAuthParamList } from '../../routes/auth.routes';
 
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
@@ -25,7 +25,7 @@ import {
 } from './styles';
 import { useAuth } from '../../hooks/auth';
 
-type signInScreenProp = StackNavigationProp<RootStackParamList, 'SignIn'>;
+type signInScreenProp = StackNavigationProp<RootAuthParamList, 'SignIn'>;
 
 export function SignIn() {
   const [email, setEmail] = useState('');

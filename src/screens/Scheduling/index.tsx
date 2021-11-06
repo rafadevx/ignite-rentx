@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components';
 import { format } from 'date-fns';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../routes/stack.routes';
+import { RootStackParamList } from '../../routes/app.stack.routes';
 import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
 import { Calendar, SelectedDay, MarkedDateProps } from '../../components/Calendar';

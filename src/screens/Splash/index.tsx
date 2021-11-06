@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../routes/stack.routes';
+import { RootAuthParamList } from '../../routes/auth.routes';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing, interpolate, Extrapolate, runOnJS } from 'react-native-reanimated';
 
 import BrandSvg from '../../assets/brand.svg';
@@ -12,7 +12,7 @@ import {
   Container,
 } from './styles';
 
-type splashScreenProp = StackNavigationProp<RootStackParamList, 'Splash'>;
+type splashScreenProp = StackNavigationProp<RootAuthParamList, 'Splash'>;
 
 export function Splash() {
   const navigation = useNavigation<splashScreenProp>();
@@ -55,7 +55,7 @@ export function Splash() {
   });
 
   function startApp() {
-    navigation.navigate('Home');
+    navigation.navigate('SignIn');
   }
 
   useEffect(() => {

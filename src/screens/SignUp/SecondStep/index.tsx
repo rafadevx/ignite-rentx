@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../routes/stack.routes';
+import { RootAuthParamList } from '../../../routes/auth.routes';
 import { useTheme } from 'styled-components';
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
@@ -33,7 +33,7 @@ interface Params {
   }
 }
 
-type signUpSecondStepScreenProp = StackNavigationProp<RootStackParamList, 'SecondStep'>;
+type signUpSecondStepScreenProp = StackNavigationProp<RootAuthParamList, 'SecondStep'>;
 
 export function SecondStep() {
   const [password, setPassword] = useState('');

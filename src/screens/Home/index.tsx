@@ -119,13 +119,13 @@ export function Home() {
         />      
       }
 
-      <PanGestureHandler onGestureEvent={onGestureEvent}>
+      {/* <PanGestureHandler onGestureEvent={onGestureEvent}>
         <AnimatedButtonWrapper style={myCarsButtonStyleAnimation}>
         <AnimatedButton onPress={handleOpenMyCars}>
           <Ionicons name="ios-car-sport" size={32} color={theme.colors.main_light} />
         </AnimatedButton>
         </AnimatedButtonWrapper>
-      </PanGestureHandler>
+      </PanGestureHandler> */}
     </Container>
   );
 }

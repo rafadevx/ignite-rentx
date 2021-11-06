@@ -8,9 +8,6 @@ import { SchedulingDetails } from '../screens/SchedulingDetails';
 import { Confirmation } from '../screens/Confirmation';
 import { MyCars } from '../screens/MyCars';
 import { Splash } from '../screens/Splash';
-import { SignIn } from '../screens/SignIn';
-import { FirstStep } from '../screens/SignUp/FirstStep';
-import { SecondStep } from '../screens/SignUp/SecondStep';
 import { CarDTO } from '../dtos/CarDTO';
 
 
@@ -41,7 +38,7 @@ export type RootStackParamList = {
   SecondStep: {user: UserProps};
 };
 
-export function StackRoutes() {
+export function AppStackRoutes() {
   return (
     <Navigator 
       screenOptions={
@@ -49,11 +46,9 @@ export function StackRoutes() {
         headerShown: false
       }
       } 
-      initialRouteName="SignIn" 
+      initialRouteName="Home" 
     >
-      <Screen name="SignIn" component={SignIn} />
-      <Screen name="FirstStep" component={FirstStep} />
-      <Screen name="SecondStep" component={SecondStep} />
+      <Screen name="Splash" component={Splash} />
       <Screen name="Home" component={Home} options={{ gestureEnabled: false }}/>
       <Screen name="CarDetails" component={CarDetails} />
       <Screen name="Scheduling" component={Scheduling} />

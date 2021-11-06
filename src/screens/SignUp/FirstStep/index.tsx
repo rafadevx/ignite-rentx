@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../routes/stack.routes';
+import { RootAuthParamList } from '../../../routes/auth.routes';
 
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
@@ -26,7 +26,7 @@ import {
   FormTitle,
 } from './styles';
 
-type signUpFistStepScreenProp = StackNavigationProp<RootStackParamList, 'FirstStep'>;
+type signUpFistStepScreenProp = StackNavigationProp<RootAuthParamList, 'FirstStep'>;
 
 export function FirstStep() {
   const [name, setName] = useState('');

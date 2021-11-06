@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import { useTheme } from 'styled-components';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../routes/stack.routes';
+import { RootStackParamList } from '../../routes/app.stack.routes';
 
 import { Feather } from '@expo/vector-icons';
 
@@ -45,9 +45,6 @@ import {
   TotalValue,
   Footer,
 } from './styles';
-
-
-
 
 interface Params {
   car: CarDTO;
@@ -106,7 +103,7 @@ export function SchedulingDetails() {
   }
 
   useEffect(() => {
-    setTotal(dates.dates.length * car.rent.price);
+    setTotal(dates.dates.length * car.price);
   }, []);
   
   return (
@@ -127,8 +124,8 @@ export function SchedulingDetails() {
           </Description>
 
           <Rent>
-            <Period>{car.rent.period}</Period>
-            <Price>R$ {car.rent.price}</Price>
+            <Period>{car.period}</Period>
+            <Price>R$ {car.price}</Price>
           </Rent>
         </Details>
 
@@ -159,7 +156,7 @@ export function SchedulingDetails() {
         <TotalRent>
           <TotalInfo>
             <TotalTitle>Total</TotalTitle>
-            <TotalDays>R$ {car.rent.price} x {dates.dates.length} diárias</TotalDays>
+            <TotalDays>R$ {car.price} x {dates.dates.length} diárias</TotalDays>
           </TotalInfo>
           <TotalValue>R$ {total}</TotalValue>
         </TotalRent>
