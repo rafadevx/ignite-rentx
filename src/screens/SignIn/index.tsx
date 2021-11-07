@@ -24,6 +24,7 @@ import {
   ButtonArea
 } from './styles';
 import { useAuth } from '../../hooks/auth';
+import { StatusBar } from 'expo-status-bar';
 
 type signInScreenProp = StackNavigationProp<RootAuthParamList, 'SignIn'>;
 
@@ -62,6 +63,7 @@ export function SignIn() {
 
   return (
     <KeyboardAvoidingView behavior="position" enabled>
+      <StatusBar style="dark" translucent />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
           <Header>

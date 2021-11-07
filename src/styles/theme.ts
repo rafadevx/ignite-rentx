@@ -12,6 +12,7 @@ export default {
     success: '#03b252',
     shape: '#e1e1e8',
     shape_dark: '#29292e',
+    lighter: '#fff'
   },
 
   fonts: {
