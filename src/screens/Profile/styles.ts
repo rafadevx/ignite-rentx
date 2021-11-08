@@ -9,14 +9,19 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-  flex-direction: row;
   width: 100%;
   height: 227px;
   background-color: ${({ theme }) => theme.colors.header};
+  padding: 0 24px;
+  align-items: center;
+`;
+
+export const HeaderTop = styled.View`
+  width: 100%;
+  flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 24px;
-  padding-top: ${getStatusBarHeight() + 30}px;
+  margin-top: ${getStatusBarHeight() + 30}px;
 `;
 
 export const Title = styled.Text`
@@ -27,12 +32,18 @@ export const Title = styled.Text`
 
 export const LogoutButton = styled(BorderlessButton)``;
 
+export const PhotoContainer = styled.View`
+  width: 180px;
+  height: 180px;
+  border-radius: 90px;
+  background-color: ${({ theme }) => theme.colors.shape};
+  margin-top: 48px;
+`;
+
 export const ProfileImage = styled.Image`
   width: 180px;
   height: 180px;
   border-radius: 90px;
-  margin-top: -90px;
-  align-self: center;
 `;
 
 export const ImageButton = styled(RectButton)`
@@ -41,7 +52,7 @@ export const ImageButton = styled(RectButton)`
   height: 40px;
   align-items: center;
   justify-content: center;
-  align-self: center;
-  margin-top: -44px;
-  margin-left: 136px;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
 `;
