@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
@@ -14,9 +14,14 @@ import {
   PhotoContainer,
   ProfileImage,
   ImageButton,
+  Content,
+  Options,
+  Option,
+  OptionTitle,
 } from './styles';
 
 export function Profile() {
+  const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
   const theme = useTheme();
   const navigation = useNavigation();
 
@@ -45,6 +50,16 @@ export function Profile() {
         </PhotoContainer>
       </Header>
 
+      <Content>
+        <Options>
+          <Option active={option === 'dataEdit'} onPress={() => setOption('dataEdit')}>
+            <OptionTitle active={option === 'dataEdit'}>Dados</OptionTitle>
+          </Option>
+          <Option active={option === 'passwordEdit'} onPress={() => setOption('passwordEdit')}>
+            <OptionTitle active={option === 'passwordEdit'}>Trocar senha</OptionTitle>
+          </Option>
+        </Options>
+      </Content>
     </Container>
   );
 }
