@@ -50,6 +50,7 @@ export function PasswordInput({ iconName, value, ...rest }: Props) {
         secureTextEntry={isPasswordVisible}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
+        autoCorrect={false}
       />
       <PasswordVisibilityButton onPress={handlePasswordVisibility}>
         <Feather name={isPasswordVisible ? 'eye' : 'eye-off'} size={24} color={theme.colors.text_detail} />
