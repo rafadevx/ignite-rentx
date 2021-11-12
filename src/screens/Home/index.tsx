@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BackHandler } from 'react-native';
+import { Alert, BackHandler } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -8,11 +8,14 @@ import Animated, { useSharedValue, useAnimatedStyle, useAnimatedGestureHandler }
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../routes/stack.routes';
+import { RootStackParamList } from '../../routes/app.stack.routes';
+import { useNetInfo } from '@react-native-community/netinfo';
+import { synchronize } from '@nozbe/watermelondb/sync';
+import { database } from '../../database';
+import api from '../../service/api';
 
 const AnimatedButton = Animated.createAnimatedComponent(MyCarsButton);
 
-import api from '../../service/api';
 import Logo from '../../assets/logo.svg';
 
 
@@ -38,6 +41,7 @@ export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation<homeScreenProp>();
+  const netInfo = useNetInfo();
   
   const positionX = useSharedValue(0);
   const positionY = useSharedValue(0);
@@ -73,6 +77,23 @@ export function Home() {
     navigation.navigate('MyCars');
   }
 
+  async function offlineSynchronize() {
+    await synchronize({
+      database,
+      pullChanges: async ({ lastPulledAt }) => {
+        const { data } = await api
+          .get(`cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`);
+
+        const { changes, latestVersion } = data;
+        return { changes, timestamp: latestVersion}
+      },
+      pushChanges: async ({ changes }) => {
+        const user = changes.user;
+        await api.post('users/sync', user);
+      }
+    })
+  }
+
   useEffect(() => {
     let isMounted = true;
 
@@ -102,6 +123,12 @@ export function Home() {
       return true;
     });
   }, []);
+
+  useEffect(() => {
+    if(netInfo.isConnected) {
+      offlineSynchronize();
+    } 
+  }, [netInfo.isConnected]);
 
   return (
     <Container>
