@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Animated, { useSharedValue, useAnimatedStyle, useAnimatedScrollHandler, interpolate, Extrapolate } from 'react-native-reanimated';
 import { useTheme } from 'styled-components';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -33,14 +33,19 @@ import { CarDTO } from '../../dtos/CarDTO';
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 import { StatusBar } from 'expo-status-bar';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { Car as CarModel } from '../../database/model/Car';
+import api from '../../service/api';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 interface Params {
-  car: CarDTO;
+  car: CarModel;
 }
 
 type carDetailsScreenProp = StackNavigationProp<RootStackParamList, 'CarDetails'>;
 
 export function CarDetails() {
+  const [carUpdated, setCarUpdated] = useState<CarDTO>();
+  const netInfo = useNetInfo();
   const theme = useTheme();
 
   const navigation = useNavigation<carDetailsScreenProp>();
@@ -79,6 +84,17 @@ export function CarDetails() {
   function handleConfirmRental() {
     navigation.navigate('Scheduling', { car });
   }
+
+  useEffect(() => {
+    async function loadCarUpdated() {
+      const response = await api.get(`/cars/${car.id}`);
+      setCarUpdated(response.data);
+    }
+
+    if (netInfo.isConnected) {
+      loadCarUpdated();
+    }
+  },[netInfo.isConnected]);
 
   return (
     <Container>

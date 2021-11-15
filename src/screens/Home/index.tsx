@@ -85,11 +85,16 @@ export function Home() {
           .get(`cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`);
 
         const { changes, latestVersion } = data;
+        
         return { changes, timestamp: latestVersion}
       },
       pushChanges: async ({ changes }) => {
-        const user = changes.user;
-        await api.post('users/sync', user);
+        const user = changes.users;
+        if(user.updated.length > 0) {
+          console.log("### PUSH ###");
+          console.log(user);
+          await api.post('/users/sync', user);
+        }
       }
     })
   }
