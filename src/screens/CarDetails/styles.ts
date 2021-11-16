@@ -112,3 +112,11 @@ export const Footer = styled.View`
   background-color: ${({ theme }) => theme.colors.background_primary};
   padding: 24px 24px ${getBottomSpace() + 24}px;
 `;
+
+export const OfflineMessage =styled.Text`
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.main};
+  font-family: ${({ theme }) => theme.fonts.primary_400};
+  font-size: ${RFValue(15)}px;
+  color: ${({ theme }) => theme.colors.lighter};
+`;

@@ -27,6 +27,7 @@ import {
   Acessories,
   About,
   Footer,
+  OfflineMessage,
 } from './styles';
 import { Button } from '../../components/Button';
 import { CarDTO } from '../../dtos/CarDTO';
@@ -44,7 +45,7 @@ interface Params {
 type carDetailsScreenProp = StackNavigationProp<RootStackParamList, 'CarDetails'>;
 
 export function CarDetails() {
-  const [carUpdated, setCarUpdated] = useState<CarDTO>();
+  const [carUpdated, setCarUpdated] = useState<CarDTO>({} as CarDTO);
   const netInfo = useNetInfo();
   const theme = useTheme();
 
@@ -82,16 +83,16 @@ export function CarDetails() {
   });
 
   function handleConfirmRental() {
-    navigation.navigate('Scheduling', { car });
+    navigation.navigate('Scheduling', { car: carUpdated });
   }
 
   useEffect(() => {
     async function loadCarUpdated() {
-      const response = await api.get(`/cars/${car.id}`);
+      const response = await api.get<CarDTO>(`/cars/${car.id}`);
       setCarUpdated(response.data);
     }
 
-    if (netInfo.isConnected) {
+    if (netInfo.isConnected === true) {
       loadCarUpdated();
     }
   },[netInfo.isConnected]);
@@ -107,7 +108,10 @@ export function CarDetails() {
 
        
         <AnimatedCarImages style={carSlyderStyleAnimation}>
-          <ImageSlider imagesUrl={car.photos} />
+          <ImageSlider imagesUrl={
+            !!carUpdated.photos ? carUpdated.photos 
+            : [{ id: car.thumbnail, photo: car.thumbnail}]
+          } />
         </AnimatedCarImages>
        
       </AnimatedHeaderAndSlider>
@@ -128,12 +132,14 @@ export function CarDetails() {
           </Rent>
         </Details>
 
-        <Acessories>
-          {car.accessories.map(accessory => (
-            <Accessory key={accessory.type} name={accessory.name} icon={getAccessoryIcon(accessory.type)} />
-          ))}
-          
-        </Acessories>
+        { carUpdated.accessories &&
+          <Acessories>
+            {carUpdated.accessories.map(accessory => (
+              <Accessory key={accessory.type} name={accessory.name} icon={getAccessoryIcon(accessory.type)} />
+            ))}
+            
+          </Acessories>
+        }
 
         <About>
           {car.about}
@@ -143,7 +149,16 @@ export function CarDetails() {
         </About>
       </AnimatedContent>
       <Footer>
-        <Button title="Escolher período do aluguel" onPress={handleConfirmRental} />
+        <Button 
+          title="Escolher período do aluguel" 
+          onPress={handleConfirmRental} 
+          enabled={!!netInfo.isConnected} 
+        />
+        { netInfo.isConnected === false && 
+          <OfflineMessage>
+            Você está desconectado, verifique sua rede.
+          </OfflineMessage>
+        }
       </Footer>
     </Container>
   );
