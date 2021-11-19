@@ -1,4 +1,4 @@
-import { eachDayOfInterval, format } from 'date-fns';
+import { eachDayOfInterval, format, addDays } from 'date-fns';
 
 import { MarkedDateProps, SelectedDay } from '.';
 import theme from '../../styles/theme';
@@ -9,7 +9,7 @@ export function generateInterval(start: SelectedDay, end: SelectedDay) {
 
   eachDayOfInterval({ start: new Date(start.timestamp), end: new Date(end.timestamp)})
   .forEach(item => {
-    const date = format(getPlatformDate(item), 'yyyy-MM-dd');
+    const date = format(addDays(item, 1), 'yyyy-MM-dd');
 
     interval = {
       ...interval,

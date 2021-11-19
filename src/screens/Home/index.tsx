@@ -12,6 +12,7 @@ import { RootStackParamList } from '../../routes/app.stack.routes';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { synchronize } from '@nozbe/watermelondb/sync';
 import { database } from '../../database';
+import { Car } from '../../database/model/Car';
 import api from '../../service/api';
 
 const AnimatedButton = Animated.createAnimatedComponent(MyCarsButton);
@@ -38,7 +39,7 @@ type homeScreenProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export function Home() {
   const theme = useTheme();
-  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation<homeScreenProp>();
   const netInfo = useNetInfo();
@@ -69,7 +70,7 @@ export function Home() {
     }
   });
 
-  function handleCarDetails(car: CarDTO) {
+  function handleCarDetails(car: Car) {
     navigation.navigate('CarDetails', { car });
   }
 
@@ -104,9 +105,12 @@ export function Home() {
 
     async function fetchCars() {
       try {
-        const response = await api.get('/cars');
+        // const response = await api.get('/cars');
+        
+        const carCollection = database.get<Car>('cars');
+        const cars = await carCollection.query().fetch();
         if (isMounted) {
-          setCars(response.data as CarDTO[]);
+          setCars(cars);
         }
       } catch (error) {
         console.log(error);

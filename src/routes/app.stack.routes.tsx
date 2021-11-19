@@ -9,6 +9,7 @@ import { Confirmation } from '../screens/Confirmation';
 import { MyCars } from '../screens/MyCars';
 import { Splash } from '../screens/Splash';
 import { CarDTO } from '../dtos/CarDTO';
+import { Car } from '../database/model/Car';
 
 
 
@@ -29,7 +30,7 @@ interface ConfirmationProps {
 export type RootStackParamList = {
   SignIn: undefined;
   Home: undefined;
-  CarDetails: {car: CarDTO};
+  CarDetails: {car: Car};
   Scheduling: {car: CarDTO};
   SchedulingDetails: {car: CarDTO, dates: RentalPeriod};
   Confirmation: ConfirmationProps;

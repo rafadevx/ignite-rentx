@@ -45,6 +45,7 @@ import {
   TotalValue,
   Footer,
 } from './styles';
+import { useAuth } from '../../hooks/auth';
 
 interface Params {
   car: CarDTO;
@@ -62,6 +63,7 @@ export function SchedulingDetails() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
+  const { user } = useAuth();
 
   const navigation = useNavigation<schedulingDetailsScreenProp>();
   const route = useRoute();
@@ -69,23 +71,14 @@ export function SchedulingDetails() {
 
   async function handleConfirmRental() {
     setLoading(true);
-    const { data } = await api.get<Schedules>(`/schedules_bycars/${car.id}`);
+    
 
-    const unavailableDates = [
-      ...data.unavailable_dates,
-      ...dates.dates,
-    ];
-
-    await api.post('/schedules_byuser', {
-      user_id: 1,
-      car,
-      startDate: dates.startFormatted,
-      endDate: dates.endFormatted,
-    });
-
-    api.put(`/schedules_bycars/${car.id}`, {
-      id: car.id,
-      unavailable_dates: unavailableDates,
+    await api.post('/rentals', {
+      user_id: user.id,
+      car_id: car.id,
+      start_date: new Date(dates.dates[0]),
+      end_date: new Date(dates.dates[dates.dates.length - 1]),
+      total,
     })
     .then(() => {
       setLoading(false);
